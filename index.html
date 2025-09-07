@@ -1,0 +1,488 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="https://20essentials.github.io/20-projects-with-astro/assets/favicon.webp"><meta name="google" content="notranslate"><title>20 Projects With Astro</title><link rel="stylesheet" href="/20-projects-with-astro/static/index.CgJy-Ur4.css"></head> <body>  <!-- Contenedor de borde con sus cuatro caras --><div id="border" data-astro-cid-y3soregm> <div id="border__top" data-astro-cid-y3soregm></div> <div id="border__right" data-astro-cid-y3soregm></div> <div id="border__bottom" data-astro-cid-y3soregm></div> <div id="border__left" data-astro-cid-y3soregm></div> </div> <!-- Elemento poligoni --> <div id="poligoni" data-astro-cid-y3soregm></div> <script>
+  /* https://github.com/maraisr/mosaic.js */
+  'use strict';
+  var q =
+    'undefined' != typeof window && window === this
+      ? this
+      : 'undefined' != typeof global
+        ? global
+        : this;
+
+  function u(n, c) {
+    function b() {}
+
+    b.prototype = c.prototype;
+    n.prototype = new b();
+    n.prototype.constructor = n;
+    for (var a in c)
+      if (q.Object.defineProperties) {
+        var r = q.Object.getOwnPropertyDescriptor(c, a);
+        void 0 !== r && q.Object.defineProperty(n, a, r);
+      } else n[a] = c[a];
+  }
+  var v;
+  (function (n) {
+    function c(b) {
+      this.f = b = void 0 === b ? [0, 0, 0] : b;
+    }
+
+    c.prototype.toString = function () {
+      return this.f.join(', ');
+    };
+    c.prototype.add = function (b) {
+      return new c([this.x + b.x, this.y + b.y, this.z + b.z]);
+    };
+    c.prototype.v = function (b) {
+      return new c([this.x - b.x, this.y - b.y, this.z - b.z]);
+    };
+    c.prototype.B = function (b) {
+      var a = new c();
+      a.x = 0 == this.x ? 0 : this.x / b;
+      a.y = 0 == this.y ? 0 : this.y / b;
+      a.z = 0 == this.z ? 0 : this.z / b;
+      return a;
+    };
+    c.prototype.N = function (b) {
+      var a = new c();
+      a.x = 0 == this.x ? 0 : this.x * b;
+      a.y = 0 == this.y ? 0 : this.y * b;
+      a.z = 0 == this.z ? 0 : this.z * b;
+      return a;
+    };
+    c.prototype.O = function (b) {
+      var a = new c();
+      a.x = this.x * b.x;
+      a.y = this.y * b.y;
+      a.z = this.z * b.z;
+      return a;
+    };
+    c.prototype.L = function (b) {
+      var a = new c();
+      a.x = this.y * b.z - this.z * b.y;
+      a.y = this.z * b.x - this.x * b.z;
+      a.z = this.x * b.y - this.y * b.x;
+      return a;
+    };
+    c.prototype.a = function () {
+      return this.x * this.x + this.y * this.y + this.z * this.z;
+    };
+    c.prototype.length = function () {
+      return Math.sqrt(this.a());
+    };
+    c.prototype.normalize = function () {
+      return this.B(this.length());
+    };
+    c.prototype.M = function (b) {
+      return this.x * b.x + this.y * b.y + this.z * b.z;
+    };
+    c.prototype.min = function (b) {
+      var a = new c();
+      a.x = this.x < b.x ? this.x : b.x;
+      a.y = this.y < b.y ? this.y : b.y;
+      a.z = this.z < b.z ? this.z : b.z;
+      return a;
+    };
+    c.prototype.max = function (b) {
+      var a = new c();
+      a.x = this.x > b.x ? this.x : b.x;
+      a.y = this.y > b.y ? this.y : b.y;
+      a.z = this.z > b.z ? this.z : b.z;
+      return a;
+    };
+    Object.defineProperties(c.prototype, {
+      x: {
+        configurable: !0,
+        enumerable: !0,
+        set: function (b) {
+          this.f[0] = b;
+        },
+        get: function () {
+          return this.f[0];
+        }
+      },
+      y: {
+        configurable: !0,
+        enumerable: !0,
+        set: function (b) {
+          this.f[1] = b;
+        },
+        get: function () {
+          return this.f[1];
+        }
+      },
+      z: {
+        configurable: !0,
+        enumerable: !0,
+        set: function (b) {
+          this.f[2] = b;
+        },
+        get: function () {
+          return this.f[2];
+        }
+      }
+    });
+    n.h = c;
+  })(v || (v = {}));
+  var w;
+  (function (n) {
+    function c(a) {
+      var c = a.length,
+        e,
+        f,
+        h,
+        d,
+        l,
+        m,
+        p,
+        k,
+        g;
+      if (3 > c) this.C = [];
+      else {
+        a = a.slice(0);
+        h = Array(c);
+        for (e = c; e--; ) h[e] = e;
+        h.sort(function (d, b) {
+          return a[b][0] - a[d][0];
+        });
+        e = this.g(a);
+        a.push(e[0], e[1], e[2]);
+        d = [this.a(a, c + 0, c + 1, c + 2)];
+        l = [];
+        m = [];
+        for (e = h.length; e--; m.length = 0) {
+          g = h[e];
+          for (f = d.length; f--; )
+            (p = a[g][0] - d[f].x),
+              0 < p && p * p > d[f].r
+                ? (l.push(d[f]), d.splice(f, 1))
+                : ((k = a[g][1] - d[f].y),
+                  p * p + k * k - d[f].r > b ||
+                    (m.push(d[f].i, d[f].j, d[f].j, d[f].k, d[f].k, d[f].i),
+                    d.splice(f, 1)));
+          this.c(m);
+          for (f = m.length; f; )
+            (k = m[--f]), (p = m[--f]), d.push(this.a(a, p, k, g));
+        }
+        for (e = d.length; e--; ) l.push(d[e]);
+        d.length = 0;
+        for (e = l.length; e--; )
+          l[e].i < c &&
+            l[e].j < c &&
+            l[e].k < c &&
+            d.push(l[e].i, l[e].j, l[e].k);
+        this.C = d;
+      }
+    }
+
+    var b = 1 / 1048576;
+    c.prototype.g = function (a) {
+      var b = Number.POSITIVE_INFINITY,
+        c = Number.POSITIVE_INFINITY,
+        f = Number.NEGATIVE_INFINITY,
+        h = Number.NEGATIVE_INFINITY,
+        d;
+      for (d = a.length; d--; )
+        a[d][0] < b && (b = a[d][0]),
+          a[d][0] > f && (f = a[d][0]),
+          a[d][1] < c && (c = a[d][1]),
+          a[d][1] > h && (h = a[d][1]);
+      a = f - b;
+      f = h - c;
+      h = Math.max(a, f);
+      b += 0.5 * a;
+      c += 0.5 * f;
+      return [
+        [b - 20 * h, c - h],
+        [b, c + 20 * h],
+        [b + 20 * h, c - h]
+      ];
+    };
+    c.prototype.a = function (a, c, e, f) {
+      var h = a[c][0],
+        d = a[c][1],
+        l = a[e][0],
+        m = a[e][1],
+        p = a[f][0],
+        k = a[f][1],
+        g = Math.abs(d - m),
+        x = Math.abs(m - k),
+        n,
+        t;
+      if (g < b && x < b) throw Error('Points!');
+      g < b
+        ? ((a = (l + h) / 2),
+          (g = -((p - l) / (k - m)) * (a - (l + p) / 2) + (m + k) / 2))
+        : x < b
+          ? ((a = (p + l) / 2),
+            (g = -((l - h) / (m - d)) * (a - (h + l) / 2) + (d + m) / 2))
+          : ((n = -((l - h) / (m - d))),
+            (t = -((p - l) / (k - m))),
+            (h = (h + l) / 2),
+            (p = (l + p) / 2),
+            (d = (d + m) / 2),
+            (k = (m + k) / 2),
+            (a = (n * h - t * p + k - d) / (n - t)),
+            (g = g > x ? n * (a - h) + d : t * (a - p) + k));
+      l = l - a;
+      m = m - g;
+      return {
+        i: c,
+        j: e,
+        k: f,
+        x: a,
+        y: g,
+        r: l * l + m * m
+      };
+    };
+    c.prototype.c = function (a) {
+      var b, c, f, h, d, l;
+      for (c = a.length; c; )
+        for (h = a[--c], f = a[--c], b = c; b; )
+          if (
+            ((l = a[--b]),
+            (d = a[--b]),
+            (f === d && h === l) || (f === l && h === d))
+          ) {
+            a.splice(c, 2);
+            a.splice(b, 2);
+            break;
+          }
+    };
+    n.D = c;
+  })(w || (w = {}));
+
+  function y(n) {
+    return Array.apply(null, Array(Math.ceil(n.length / 3)))
+      .map(function (c, b) {
+        return b;
+      })
+      .map(function (c, b) {
+        return n.slice(3 * b, 3 * b + 3);
+      });
+  }
+  var z;
+  (function (n) {
+    function c(d, b) {
+      this.a = d;
+      this.m = b;
+      var a = 100 * Math.random();
+      this.face = 50 < a ? 0 : 50 > a && 25 < a ? 1 : 25 > a ? 2 : void 0;
+      this.b = this.u();
+      this.K = this.g();
+      this.P = this.o();
+    }
+
+    function b() {}
+
+    function a() {}
+
+    function r(d, a, b, f, k) {
+      this.o = d;
+      this.g = a;
+      this.s = f;
+      this.u = k;
+      var g;
+      k = this.g;
+      for (g = Array(b); 0 <= b; b--)
+        g[b] = [0 + Math.random() * d, k - Math.random() * a];
+      g.push([0, k]);
+      g.push([0 + d / 2, k]);
+      g.push([0 + d, k]);
+      g.push([0 + d, k - a / 2]);
+      g.push([0 + d, k - a]);
+      g.push([0 + d / 2, k - a]);
+      g.push([0, k - a]);
+      g.push([0, k - a / 2]);
+      for (b = 6; 0 <= b; b--)
+        g.push([0 + Math.random() * d, k]),
+          g.push([0, k - Math.random() * a]),
+          g.push([0 + d, k - Math.random() * a]),
+          g.push([0 + Math.random() * d, k - a]);
+      this.c = y(new w.D(g).C).map(function (a) {
+        var b = Array(a.length),
+          b = a.map(function (a) {
+            return new v.h([g[a][0], g[a][1], 0]);
+          });
+        return new c(b, f);
+      });
+      e.call(this);
+    }
+
+    function e() {
+      var a = this;
+      this.a = new v.h([this.o / 2, this.g / 2, 1.2]);
+      self.addEventListener('mousemove', function (b) {
+        a.a.x = b.pageX;
+        a.a.y = b.pageY;
+      });
+    }
+
+    function f(a) {
+      this.l = new v.h(a);
+    }
+
+    function h(b, c, m, h) {
+      function k() {
+        e.a.I() && e.a.A();
+        if (0 == n || n != e.b.offsetWidth + e.b.offsetHeight)
+          (n = e.b.offsetWidth + e.b.offsetHeight), g(), e.a.A();
+        requestAnimationFrame(k);
+      }
+
+      function g() {
+        e.g();
+        e.a = new r(e.b.offsetWidth, e.b.offsetHeight, e.c, new f(m), new f(c));
+        b.appendChild(
+          a.a(
+            e.a.c.map(function (a) {
+              return a.b;
+            }),
+            e.b.offsetWidth,
+            e.b.offsetHeight
+          )
+        );
+      }
+
+      var e = this;
+      this.b = b;
+      this.c = h;
+      g();
+      var n = 0;
+      requestAnimationFrame(k);
+    }
+
+    h.prototype.g = function () {
+      for (var a = this.b.childNodes.length - 1; 0 <= a; a--)
+        this.b.removeChild(this.b.childNodes[a]);
+    };
+    n.F = h;
+    f.prototype.H = function (a, b, c) {
+      var e = new v.h(this.l.f);
+      return new f(
+        e.add(a.l.O(b.l).N(c)).f.map(function (a) {
+          return Math.ceil(a);
+        })
+      );
+    };
+    f.prototype.toString = function () {
+      return 'rgb(' + this.l.toString() + ')';
+    };
+    e.prototype.A = function () {
+      for (var a = 0; a < this.c.length; a++) {
+        var b = this.c[a],
+          c;
+        a: switch (((c = b.P.M(this.a.v(b.K).normalize())), b.face)) {
+          case 1:
+            c = 0.99 * Math.abs(Math.min(c, 0));
+            break a;
+          case 2:
+            c = 0.89 * Math.max(Math.abs(c), 0);
+            break a;
+          default:
+            c = 0.85 * Math.abs(c);
+        }
+        c = b.m.H(this.s, this.u, c);
+        b.b.setAttributeNS(
+          null,
+          'style',
+          'fill: ' + c.toString() + '; stroke: ' + c.toString() + ';'
+        );
+      }
+    };
+    u(r, e);
+    r.prototype.I = function () {
+      return this.R != this.a.x + this.a.y
+        ? ((this.R = this.a.x + this.a.y), !0)
+        : !1;
+    };
+    a.prototype.s = function () {
+      return document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    };
+    a.prototype.c = function (a, b) {
+      Object.keys(b).forEach(function (c) {
+        a.setAttributeNS(null, c, b[c]);
+      });
+      return a;
+    };
+    a.a = function (a, b, c) {
+      var e = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
+        f = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      e.setAttributeNS(null, 'viewBox', '0 0 ' + b + ' ' + c);
+      e.appendChild(f);
+      a.forEach(function (a) {
+        f.appendChild(a);
+      });
+      return e;
+    };
+    u(b, a);
+    b.a = a.a;
+    b.prototype.u = function () {
+      return this.c(this.s(), {
+        'stroke-linejoin': 'round',
+        'stroke-miterlimit': '1',
+        'stroke-width': '1',
+        points: this.a
+          .map(function (a) {
+            return a.x + ' ' + a.y;
+          })
+          .join(' '),
+        style:
+          'fill: ' + this.m.toString() + '; stroke: ' + this.m.toString() + ';'
+      });
+    };
+    u(c, b);
+    c.a = b.a;
+    c.prototype.g = function () {
+      return new v.h([
+        this.a
+          .map(function (a) {
+            return a.x;
+          })
+          .reduce(function (a, b) {
+            return a + b;
+          }),
+        this.a
+          .map(function (a) {
+            return a.y;
+          })
+          .reduce(function (a, b) {
+            return a + b;
+          }),
+        this.a
+          .map(function (a) {
+            return a.z;
+          })
+          .reduce(function (a, b) {
+            return a + b;
+          })
+      ]).B(3);
+    };
+    c.prototype.o = function () {
+      return this.w.v(this.G).L(this.w.v(this.J)).normalize();
+    };
+    Object.defineProperties(c.prototype, {
+      w: {
+        configurable: !0,
+        enumerable: !0,
+        get: function () {
+          return this.a[0];
+        }
+      },
+      G: {
+        configurable: !0,
+        enumerable: !0,
+        get: function () {
+          return this.a[1];
+        }
+      },
+      J: {
+        configurable: !0,
+        enumerable: !0,
+        get: function () {
+          return this.a[2];
+        }
+      }
+    });
+  })(z || (z = {}));
+  new z.F(document.getElementById('poligoni'), [86, 200, 148], [25, 52, 65], 250);
+</script>  <main data-astro-cid-bbe6dxrz> <header data-astro-cid-bbe6dxrz> <svg class="tagline fluid" viewBox="1521 1500 882 125" fill="none" xmlns="http://www.w3.org/2000/svg" data-astro-cid-bbe6dxrz> <path fill="currentColor" d="M1548.5 1597c-5.2 0-9-1.2-11.4-3.5-2.3-2.4-3.5-6.1-3.5-11.2v-48.6h12.3v47.5c0 2.3.5 4 1.5 5 1 .8 2.6 1.3 4.8 1.3h7.2v9.5h-11ZM1568.4 1597v-68.2h12.3v28.7h-1.5c.5-3 1.5-5.4 3-7.3 1.6-1.9 3.5-3.3 5.7-4.2 2.3-1 4.7-1.4 7.4-1.4 3.8 0 7 .8 9.5 2.5 2.6 1.6 4.6 3.9 5.9 6.8 1.3 3 2 6.3 2 10.2v32.9h-12.3v-30c0-4.1-.7-7.2-2.1-9.3-1.4-2-3.6-3.1-6.6-3.1-3.4 0-6 1-8 3.2s-3 5.4-3 9.5v29.7h-12.3ZM1647 1598.2c-5 0-9.5-1.1-13.3-3.3a22.5 22.5 0 0 1-8.7-9.4c-2-4-3.1-8.8-3.1-14.1 0-5.4 1-10 3-14 2.1-4 5-7.2 8.7-9.5 3.8-2.2 8.2-3.3 13.2-3.3 4.8 0 9 1 12.7 3.3 3.7 2.1 6.6 5.3 8.6 9.4 2 4 3 9 3 14.7v2.8h-36.4c.2 4.5 1.4 7.9 3.6 10.2a12 12 0 0 0 8.8 3.4c2.8 0 5-.6 6.9-1.9 1.8-1.2 3-3 3.8-5.2l12.6.7c-1.4 5-4.2 9-8.4 11.8-4 3-9 4.4-15 4.4Zm-12.3-31.6h23.7c-.3-4.2-1.5-7.3-3.6-9.2-2.1-2-4.8-3.1-8-3.1-3.3 0-6 1-8.2 3.2a15.2 15.2 0 0 0-4 9ZM1726.5 1598.2a23.2 23.2 0 0 1-22.2-12.7c-2-4-3-8.8-3-14.1 0-5.5 1-10.2 3-14.1 2.2-4 5.1-7.2 8.9-9.3a26 26 0 0 1 13.3-3.4c5 0 9.5 1.1 13.3 3.4a22 22 0 0 1 8.7 9.3c2.1 4 3.2 8.6 3.2 14 0 5.5-1 10.2-3.2 14.2-2 4-5 7.2-8.7 9.4a26 26 0 0 1-13.3 3.3Zm0-10c4 0 7-1.5 9.2-4.4 2.1-3 3.2-7.1 3.2-12.4 0-5.3-1-9.4-3.2-12.3-2.2-3-5.2-4.5-9.2-4.5-4 0-7 1.5-9.2 4.5-2.1 3-3.2 7-3.2 12.3 0 5.3 1 9.4 3.2 12.4 2.2 2.9 5.3 4.4 9.2 4.4ZM1761.2 1597v-51.3h11.1l.5 14.4-1.5-.5a19 19 0 0 1 3.2-8.7c1.6-2.2 3.6-3.8 5.9-4.8 2.3-1 4.8-1.5 7.6-1.5 3.7 0 6.9.8 9.5 2.5 2.6 1.7 4.6 4 6 6.9 1.3 2.9 2 6.2 2 10v33H1793v-29c0-2.9-.3-5.3-.8-7.3-.6-2-1.6-3.5-2.9-4.5-1.3-1-3-1.6-5.2-1.6a9.9 9.9 0 0 0-7.9 3.4c-1.9 2.3-2.8 5.7-2.8 10v29h-12.3ZM1839.8 1598.2c-5.1 0-9.6-1.1-13.4-3.3a22.5 22.5 0 0 1-8.7-9.4c-2-4-3-8.8-3-14.1 0-5.4 1-10 3-14s5-7.2 8.6-9.5c3.8-2.2 8.2-3.3 13.2-3.3 4.9 0 9.1 1 12.8 3.3 3.7 2.1 6.5 5.3 8.5 9.4 2 4 3 9 3 14.7v2.8h-36.4c.3 4.5 1.5 7.9 3.6 10.2a12 12 0 0 0 8.9 3.4c2.7 0 5-.6 6.8-1.9 1.8-1.2 3.1-3 3.8-5.2l12.6.7c-1.4 5-4.2 9-8.3 11.8-4.1 3-9.1 4.4-15 4.4Zm-12.4-31.6h23.7c-.2-4.2-1.4-7.3-3.5-9.2-2.1-2-4.8-3.1-8.1-3.1s-6 1-8.2 3.2a15.2 15.2 0 0 0-3.9 9ZM1907.8 1597l-15.5-51.3h12.6l10 37.4 10.2-37.4h10.8l10.4 37.4 10-37.4h12.5l-15.4 51.3h-12.7l-10.2-34.4-10 34.4h-12.7ZM1976.6 1597v-68.2h12.3v28.7h-1.5c.5-3 1.5-5.4 3-7.3 1.6-1.9 3.5-3.3 5.7-4.2 2.2-1 4.7-1.4 7.4-1.4 3.8 0 7 .8 9.5 2.5 2.6 1.6 4.6 3.9 5.8 6.8 1.4 3 2 6.3 2 10.2v32.9h-12.2v-30c0-4.1-.7-7.2-2.1-9.3-1.4-2-3.7-3.1-6.7-3.1-3.3 0-6 1-8 3.2s-2.9 5.4-2.9 9.5v29.7h-12.3ZM2055.3 1598.2a23.2 23.2 0 0 1-22.2-12.7c-2-4-3-8.8-3-14.1 0-5.5 1-10.2 3-14.1 2.2-4 5.1-7.2 8.9-9.3a26 26 0 0 1 13.3-3.4c5 0 9.5 1.1 13.3 3.4a22 22 0 0 1 8.7 9.3c2.1 4 3.2 8.6 3.2 14 0 5.5-1 10.2-3.2 14.2-2 4-5 7.2-8.7 9.4a26 26 0 0 1-13.3 3.3Zm0-10c4 0 7-1.5 9.1-4.4 2.2-3 3.3-7.1 3.3-12.4 0-5.3-1-9.4-3.3-12.3-2-3-5.1-4.5-9-4.5-4 0-7.1 1.5-9.3 4.5-2.2 3-3.3 7-3.3 12.3 0 5.3 1.1 9.4 3.3 12.4 2.2 2.9 5.3 4.4 9.2 4.4ZM2141.1 1598.2c-3.5 0-6.7-.8-9.4-2.4a16 16 0 0 1-6.1-6.4l-.3 7.6h-11.7v-68.2h12.3v24.2c1.4-2.3 3.4-4.3 6-6 2.6-1.6 5.7-2.4 9.2-2.4 4.5 0 8.3 1.1 11.5 3.4 3.2 2.1 5.7 5.2 7.4 9.3a34 34 0 0 1 2.7 14c0 5.5-.9 10.3-2.7 14.3-1.7 4-4.2 7-7.4 9.3-3.3 2.2-7 3.3-11.5 3.3Zm-2.8-10c3.6 0 6.4-1.5 8.5-4.4 2.1-3 3.2-7.2 3.2-12.4 0-5.3-1-9.5-3.2-12.4-2-3-4.8-4.4-8.4-4.4-2.6 0-4.8.6-6.8 2a12.3 12.3 0 0 0-4.3 5.7c-1 2.5-1.4 5.5-1.4 9s.4 6.5 1.4 9.1a13 13 0 0 0 4.3 5.8c1.9 1.3 4.1 2 6.8 2ZM2189.2 1598.2c-5.2 0-9.3-1.7-12.4-5.1a21 21 0 0 1-4.5-14.3v-33h12.3v29.9c0 4.3.7 7.5 2 9.5 1.5 2 3.8 3 6.7 3 3.3 0 5.9-1.1 7.7-3.3 1.8-2.2 2.8-5.5 2.8-9.7v-29.5h12.2v51.3h-11.2l-.3-14.1 1.6.5c-.8 4.8-2.6 8.5-5.5 11a16.8 16.8 0 0 1-11.4 3.8ZM2228.6 1597v-51.3h12.3v51.3h-12.3ZM2266 1597c-3.7 0-6.7-1-9-2.9-2.2-1.9-3.3-5-3.3-9.2v-56h12.3v54.8c0 1.2.3 2.2 1 2.8.7.7 1.7 1 2.9 1h3.7v9.5h-7.6ZM2299.7 1598.2c-4.3 0-8.1-1.1-11.3-3.3a21 21 0 0 1-7.3-9.3c-1.7-4-2.6-8.8-2.6-14.2 0-5.5.9-10.2 2.6-14.2 1.7-4 4.2-7.2 7.4-9.4 3.2-2.1 7-3.2 11.2-3.2 3.6 0 6.7.7 9.4 2.2 2.8 1.5 4.9 3.5 6.3 6.2v-24.2h12.3v68.2h-11.8l-.2-7.6a15 15 0 0 1-6.4 6.4c-2.8 1.6-6 2.4-9.6 2.4Zm3.8-10c2.5 0 4.7-.7 6.4-2 1.8-1.2 3.1-3.1 4-5.6 1-2.6 1.5-5.6 1.5-9.2 0-3.7-.5-6.8-1.5-9.2-.9-2.5-2.2-4.4-4-5.7-1.7-1.3-3.9-2-6.4-2-3.7 0-6.7 1.6-9 4.6-2.1 3-3.2 7-3.2 12.3 0 5 1 9.2 3.2 12.3 2.3 3 5.3 4.5 9 4.5ZM2361 1598.2c-5 0-9.3-.8-12.8-2.3a17.5 17.5 0 0 1-11-15l12.6-.6a9.8 9.8 0 0 0 3.3 6.2c1.8 1.5 4.5 2.3 8 2.3 2.9 0 5.1-.5 6.7-1.4 1.7-1 2.5-2.4 2.5-4.4 0-1.2-.3-2.1-.9-2.9a7 7 0 0 0-3.2-2c-1.6-.6-4-1.2-7.1-1.7-5.3-1-9.4-2-12.4-3.3-3-1.3-5.1-3-6.4-5-1.3-2-1.9-4.4-1.9-7.4 0-4.8 1.9-8.7 5.5-11.6 3.7-3 9.1-4.5 16.2-4.5 4.7 0 8.5.8 11.7 2.3 3 1.5 5.5 3.5 7.3 6.1 1.7 2.6 2.9 5.5 3.3 8.9l-12.4.5c-.3-1.7-.9-3.2-1.7-4.5-.8-1.3-2-2.2-3.4-2.9-1.4-.7-3-1-5-1-2.8 0-5 .6-6.5 1.7a5.6 5.6 0 0 0-2.2 4.6c0 1.4.3 2.5 1 3.4.7.9 1.8 1.6 3.3 2.2 1.6.5 3.6 1 6.2 1.4 5.4.9 9.6 2 12.7 3.3 3 1.3 5.3 3 6.6 5 1.3 2 2 4.4 2 7.2 0 3.3-1 6-2.8 8.4-1.8 2.3-4.3 4-7.7 5.2a34.7 34.7 0 0 1-11.5 1.8Z" data-astro-cid-bbe6dxrz></path> <mask id="mask0_3180_3" style="mask-type: alpha" maskUnits="userSpaceOnUse" x="0" y="1522" width="1575" height="53" data-astro-cid-bbe6dxrz> <rect y="1522" width="1575" height="53" fill="url(#paint0_linear_3180_3)" data-astro-cid-bbe6dxrz></rect> </mask> <g mask="url(#mask0_3180_3)" class="construct construct--horizontal" data-astro-cid-bbe6dxrz> <path class="cross" d="M1525.52 1555.24V1545.73H1559.41V1555.24H1525.52Z" fill="currentColor" data-astro-cid-bbe6dxrz></path> <g class="claw claw--horizontal" data-astro-cid-bbe6dxrz> <path d="M1530.5 1542.2L1515.5 1535.7L1499.25 1542.95" stroke="currentColor" stroke-width="5" stroke-linecap="round" data-astro-cid-bbe6dxrz></path> <path d="M1530.5 1558.7L1515.5 1565.2L1499.25 1557.95" stroke="currentColor" stroke-width="5" stroke-linecap="round" data-astro-cid-bbe6dxrz></path> <circle cx="1501.5" cy="1550.7" r="9" transform="rotate(-90 1501.5 1550.7)" fill="#D9D9D9" stroke="currentColor" stroke-width="5" data-astro-cid-bbe6dxrz></circle> <line x1="1494" y1="1550.5" x2="2.18557e-07" y2="1550.5" stroke="currentColor" stroke-width="5" data-astro-cid-bbe6dxrz></line> </g> </g> <mask id="mask1_3180_3" style="mask-type: alpha" maskUnits="userSpaceOnUse" x="2203" y="0" width="67" height="1545" data-astro-cid-bbe6dxrz> <rect x="2203" width="67" height="1545" fill="url(#paint1_linear_3180_3)" data-astro-cid-bbe6dxrz></rect> </mask> <g mask="url(#mask1_3180_3)" class="construct construct--vertical" data-astro-cid-bbe6dxrz> <path class="dot" d="M2228.42 1538.92V1527.98H2241.19V1538.92H2228.42Z" fill="currentColor" data-astro-cid-bbe6dxrz></path> <g class="claw claw--vertical" data-astro-cid-bbe6dxrz> <path d="M2243 1533.5L2249.5 1518.5L2242.25 1502.25" stroke="currentColor" stroke-width="5" stroke-linecap="round" data-astro-cid-bbe6dxrz></path> <path d="M2226.5 1533.5L2220 1518.5L2227.25 1502.25" stroke="currentColor" stroke-width="5" stroke-linecap="round" data-astro-cid-bbe6dxrz></path> <circle cx="2234.5" cy="1504.5" r="9" fill="#D9D9D9" stroke="currentColor" stroke-width="5" data-astro-cid-bbe6dxrz></circle> <line x1="2234.5" y1="1494" x2="2234.5" y2="-2.98121e-08" stroke="currentColor" stroke-width="5" data-astro-cid-bbe6dxrz></line> </g> </g> <rect x="2387" y="1585" width="13" height="12" fill="currentColor" data-astro-cid-bbe6dxrz></rect> <defs data-astro-cid-bbe6dxrz> <linearGradient id="paint0_linear_3180_3" x1="0" y1="1548.5" x2="1575" y2="1548.5" gradientUnits="userSpaceOnUse" data-astro-cid-bbe6dxrz> <stop stop-color="white" stop-opacity="0" data-astro-cid-bbe6dxrz></stop> <stop offset="0.255" data-astro-cid-bbe6dxrz></stop> <stop offset="1" data-astro-cid-bbe6dxrz></stop> </linearGradient> <linearGradient id="paint1_linear_3180_3" x1="2236.5" y1="0" x2="2236.5" y2="1545" gradientUnits="userSpaceOnUse" data-astro-cid-bbe6dxrz> <stop stop-color="white" stop-opacity="0" data-astro-cid-bbe6dxrz></stop> <stop offset="0.245" data-astro-cid-bbe6dxrz></stop> <stop offset="1" data-astro-cid-bbe6dxrz></stop> </linearGradient> </defs> </svg> <img src="https://20essentials.github.io/20-projects-with-astro/assets/astro.svg" alt="Logo de Astro" title="Astro" class="am-img" data-astro-cid-bbe6dxrz> </header> </main>  <script type="module" src="/20-projects-with-astro/static/Hero.astro_astro_type_script_index_0_lang.Eoa32iqS.js"></script> <!-- https://github.com/20essentials/project-000-595/blob/gh-pages/style.css --><section class="am-container-cards" data-astro-cid-5wnvluim> <a class="container" href="https://github.com/20essentials/project-000-788" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/n788.avif" alt="Ichiban Landing" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-000-859" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/n859.avif" alt="Ubiq Landing" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-000-853" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/n853.avif" alt="Gallery" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-000-948" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/n948.avif" alt="Lander Nike" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1059" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1059.avif" alt="Atracador SkewY" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1000" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1000.avif" alt="Tik Tok Clon" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-000-940" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/n940.avif" alt="Paginacion" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-000-942" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/n942.avif" alt="Simple i18N" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-000-944" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/n944.avif" alt="Landing UxCorp" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-000-962" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/n962.avif" alt="Editor de Codigo" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1159" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1159.avif" alt="Girhos" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1161" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1161.avif" alt="Desorden" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1163" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1163.avif" alt="NightFall" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1165" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1165.avif" alt="DrawSVG Plugin" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1170" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1170.avif" alt="Siracusa" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1173" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1173.avif" alt="Grow" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1177" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1177.avif" alt="Flip List" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1183" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1183.avif" alt="JsConf" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1184" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1184.avif" alt="Stars" data-astro-cid-5wnvluim> </a><a class="container" href="https://github.com/20essentials/project-1187" data-astro-cid-5wnvluim> <img src="https://20essentials.github.io/20-projects-with-astro/assets/project-1187.avif" alt="Google Translate" data-astro-cid-5wnvluim> </a> </section>   </body></html>
