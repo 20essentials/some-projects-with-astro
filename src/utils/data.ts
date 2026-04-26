@@ -123,7 +123,7 @@ export const arrayCards = [
     title: 'Card Band 3D',
     repo: 'https://github.com/20essentials/project-1376/',
     web: 'https://20essentials.github.io/project-1376/',
-    localImage: '/assets/projects/project-1376.avif',
+    localImage: '/assets/project-1376.avif',
     id: '021'
   }
 ];
