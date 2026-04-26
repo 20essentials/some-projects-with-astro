@@ -127,3 +127,5 @@ export const arrayCards = [
     id: '021'
   }
 ];
+
+export const title = `${arrayCards.length} Projects With Astro`;
